@@ -4,7 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.sasaj.lastfmapp.ui.FragmentSource;
+import com.sasaj.lastfmapp.ui.ArtistsFragment;
+import com.sasaj.lastfmapp.ui.TracksFragment;
 
 /**
  * Created by DS on 1/17/2018.
@@ -12,20 +13,18 @@ import com.sasaj.lastfmapp.ui.FragmentSource;
 
 public class MainPagerAdapter extends FragmentPagerAdapter {
     private static int NUM_ITEMS = 2;
-    private final FragmentSource fragmentSource;
 
-    public MainPagerAdapter(FragmentManager fm, FragmentSource fragmentSource) {
+    public MainPagerAdapter(FragmentManager fm) {
         super(fm);
-        this.fragmentSource = fragmentSource;
     }
 
     @Override
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return fragmentSource.getArtistsFragment();
+                return ArtistsFragment.newInstance(null, null);
             case 1:
-                return fragmentSource.getTracksFragment();
+                return TracksFragment.newInstance(null, null);
             default:
                 return null;
         }

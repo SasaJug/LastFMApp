@@ -1,7 +1,6 @@
 package com.sasaj.lastfmapp.ui;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.Track;
+import com.sasaj.lastfmapp.domain.entity.Track;
 import com.sasaj.lastfmapp.httpclient.RetrofitClient;
-import com.sasaj.lastfmapp.ui.adapter.ArtistAdapter;
 import com.sasaj.lastfmapp.ui.adapter.TracksAdapter;
 
 import java.util.List;
@@ -21,11 +19,10 @@ import java.util.List;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TracksFragment.OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interface
  * to handle interaction events.
  * Use the {@link TracksFragment#newInstance} factory method to
  * create an instance of this fragment.

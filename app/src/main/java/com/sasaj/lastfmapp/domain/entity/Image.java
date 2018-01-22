@@ -1,27 +1,35 @@
+package com.sasaj.lastfmapp.domain.entity;
 
-package com.sasaj.lastfmapp.domain;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+import static com.sasaj.lastfmapp.domain.constants.TableNames.IMAGE_TABLE_NAME;
+
+@Entity(tableName = IMAGE_TABLE_NAME)
+public class Image extends BaseModel {
+
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
+    private long mbid;
 
     @SerializedName("#text")
     @Expose
     private String text;
+
     @SerializedName("size")
     @Expose
     private String size;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+    @Ignore
     public Image() {
     }
 
     /**
-     * 
      * @param text
      * @param size
      */
@@ -29,6 +37,22 @@ public class Image {
         super();
         this.text = text;
         this.size = size;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getMbid() {
+        return mbid;
+    }
+
+    public void setMbid(long mbid) {
+        this.mbid = mbid;
     }
 
     public String getText() {
@@ -46,5 +70,4 @@ public class Image {
     public void setSize(String size) {
         this.size = size;
     }
-
 }

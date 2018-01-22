@@ -1,44 +1,58 @@
 
-package com.sasaj.lastfmapp.domain;
+package com.sasaj.lastfmapp.domain.entity;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Artist {
+
+import static com.sasaj.lastfmapp.domain.constants.TableNames.ARTIST_TABLE_NAME;
+
+@Entity(tableName = ARTIST_TABLE_NAME)
+public class Artist extends BaseModel {
 
     @SerializedName("name")
     @Expose
     private String name;
+
     @SerializedName("playcount")
     @Expose
     private String playcount;
+
     @SerializedName("listeners")
     @Expose
     private String listeners;
+
+    @PrimaryKey
+    @NonNull
     @SerializedName("mbid")
     @Expose
     private String mbid;
+
     @SerializedName("url")
     @Expose
     private String url;
+
     @SerializedName("streamable")
     @Expose
     private String streamable;
+
+    @Ignore
     @SerializedName("image")
     @Expose
     private List<Image> image = null;
 
-    /**
-     * No args constructor for use in serialization
-     * 
-     */
+    @Ignore
     public Artist() {
     }
 
     /**
-     * 
      * @param listeners
      * @param mbid
      * @param name
@@ -47,6 +61,7 @@ public class Artist {
      * @param playcount
      * @param url
      */
+    @Ignore
     public Artist(String name, String playcount, String listeners, String mbid, String url, String streamable, List<Image> image) {
         super();
         this.name = name;
@@ -56,6 +71,16 @@ public class Artist {
         this.url = url;
         this.streamable = streamable;
         this.image = image;
+    }
+
+    public Artist(String name, String playcount, String listeners, String mbid, String url, String streamable) {
+        super();
+        this.name = name;
+        this.playcount = playcount;
+        this.listeners = listeners;
+        this.mbid = mbid;
+        this.url = url;
+        this.streamable = streamable;
     }
 
     public String getName() {
@@ -113,6 +138,4 @@ public class Artist {
     public void setImage(List<Image> image) {
         this.image = image;
     }
-
-
 }

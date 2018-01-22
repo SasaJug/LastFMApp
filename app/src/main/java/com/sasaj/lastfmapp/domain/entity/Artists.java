@@ -1,5 +1,5 @@
 
-package com.sasaj.lastfmapp.domain;
+package com.sasaj.lastfmapp.domain.entity;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

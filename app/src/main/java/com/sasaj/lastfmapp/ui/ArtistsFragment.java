@@ -1,7 +1,6 @@
 package com.sasaj.lastfmapp.ui;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,9 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.Artist;
+import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.httpclient.RetrofitClient;
 import com.sasaj.lastfmapp.ui.adapter.ArtistAdapter;
+import com.sasaj.lastfmapp.utility.InjectorUtils;
 
 import java.util.List;
 
@@ -106,7 +106,7 @@ public class ArtistsFragment extends Fragment {
         mListener = null;
     }
     public void getArtists() {
-        RetrofitClient.getInstance().getService().listChartArtists(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
+        InjectorUtils.provideRepository(getContext()).getArtists()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(chart -> setArtistsList(chart.getArtists().getArtist()));

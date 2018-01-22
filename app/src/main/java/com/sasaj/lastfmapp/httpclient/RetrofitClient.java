@@ -31,7 +31,7 @@ public class RetrofitClient {
 //        okHttpBuilder.addInterceptor(new TokenInterceptor());
 
         if (BuildConfig.DEBUG) {
-            okHttpBuilder.addInterceptor(loggingInterceptor);
+//            okHttpBuilder.addInterceptor(loggingInterceptor);
         }
 
         client = okHttpBuilder.build();

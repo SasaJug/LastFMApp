@@ -1,11 +1,10 @@
 package com.sasaj.lastfmapp.httpclient;
 
-import com.sasaj.lastfmapp.domain.Chart;
-import com.sasaj.lastfmapp.domain.TopTracks;
+import com.sasaj.lastfmapp.domain.entity.Chart;
+import com.sasaj.lastfmapp.domain.entity.TopTracks;
 
 import io.reactivex.Single;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**

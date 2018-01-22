@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.Track;
+import com.sasaj.lastfmapp.domain.entity.Track;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
