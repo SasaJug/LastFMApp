@@ -4,10 +4,13 @@ import android.content.Context;
 import android.util.Log;
 
 import com.sasaj.lastfmapp.Repository;
+import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Chart;
 import com.sasaj.lastfmapp.httpclient.RetrofitClient;
 
-import io.reactivex.Scheduler;
+import java.util.List;
+
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
@@ -15,7 +18,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by sjugurdzija on 1/22/2018.
  */
 
-public class LastFmRepository implements Repository{
+public class LastFmRepository implements Repository {
 
     private static final String LOG_TAG = LastFmRepository.class.getSimpleName();
     // For Singleton instantiation
@@ -23,7 +26,7 @@ public class LastFmRepository implements Repository{
     private static LastFmRepository sInstance;
     private final Context context;
 
-    public LastFmRepository(Context context){
+    public LastFmRepository(Context context) {
         this.context = context;
     }
 
@@ -38,21 +41,16 @@ public class LastFmRepository implements Repository{
         return sInstance;
     }
 
-    public Single<Chart> getArtists(){
-//
-//        DatabaseCreator.getInstance(context).artistDao().getAll()
-//                .subscribeOn(Schedulers.io())
-//                .flatMapIterable(list -> list)
-//                .subscribe(item -> Log.e(LOG_TAG, "getArtistFromDatabase: "+item.getName()));
-//
-//        RetrofitClient.getInstance().getService().listChartArtists(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
-//                .toFlowable()
-//                .subscribeOn(Schedulers.io())
-//                .doOnNext(chart -> DatabaseCreator.getInstance(context).artistDao().insertAll(chart.getArtists().getArtist()))
-//                .flatMapIterable(chart -> chart.getArtists().getArtist())
-//                .subscribe(item -> Log.e(LOG_TAG, "getArtist: "+item.getName()));
+    public Flowable<List<Artist>> getArtists() {
+        return DatabaseCreator.getInstance(context).artistDao().getAll();
+    }
 
-
-        return RetrofitClient.getInstance().getService().listChartArtists(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT);
+    @Override
+    public void refreshArtists() {
+        RetrofitClient.getInstance().getService().listChartArtists(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
+                .toFlowable()
+                .subscribeOn(Schedulers.io())
+                .doOnNext(chart -> DatabaseCreator.getInstance(context).artistDao().insertAll(chart.getArtists().getArtist()))
+                .subscribe(chart -> Log.e(LOG_TAG, "size " + chart.getArtists().getArtist().size()));
     }
 }

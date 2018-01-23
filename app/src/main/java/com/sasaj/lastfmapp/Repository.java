@@ -1,7 +1,11 @@
 package com.sasaj.lastfmapp;
 
+import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Chart;
 
+import java.util.List;
+
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 /**
@@ -10,5 +14,6 @@ import io.reactivex.Single;
 
 public interface Repository {
 
-    Single<Chart> getArtists();
+    Flowable<List<Artist>> getArtists();
+    void refreshArtists();
 }

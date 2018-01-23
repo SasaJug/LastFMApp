@@ -41,9 +41,15 @@ public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ArtistView
     @Override
     public void onBindViewHolder(ArtistViewHolder holder, int position) {
         Artist artist = artistList.get(position);
-        Picasso.with(context).load(artist.getImage().get(0).getText()).into(holder.thumbnail);
-        holder.name.setText(artist.getName());
-        holder.count.setText(artist.getPlaycount());
+
+        try {
+            Picasso.with(context).load(artist.getImage().get(0).getText()).into(holder.thumbnail);
+            holder.name.setText(artist.getName());
+            holder.count.setText(artist.getPlaycount());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

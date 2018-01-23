@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.domain.entity.Artist;
-import com.sasaj.lastfmapp.httpclient.RetrofitClient;
 import com.sasaj.lastfmapp.ui.adapter.ArtistAdapter;
 import com.sasaj.lastfmapp.utility.InjectorUtils;
 
@@ -97,7 +96,15 @@ public class ArtistsFragment extends Fragment {
         adapter = new ArtistAdapter(getContext());
         list.setAdapter(adapter);
         getArtists();
+        if(savedInstanceState == null)
+            InjectorUtils.provideRepository(getContext()).refreshArtists();
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
     }
 
     @Override
@@ -105,11 +112,12 @@ public class ArtistsFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
     public void getArtists() {
         InjectorUtils.provideRepository(getContext()).getArtists()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(chart -> setArtistsList(chart.getArtists().getArtist()));
+                .subscribe(this::setArtistsList);
     }
 
     public void setArtistsList(List<Artist> artists) {
