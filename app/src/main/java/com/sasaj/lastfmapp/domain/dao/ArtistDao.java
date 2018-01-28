@@ -30,6 +30,9 @@ public interface ArtistDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<Artist> artists);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insert(Artist artist);
+
     // Deletes a single artist
     @Delete
     void delete(Artist artist);

@@ -1,5 +1,6 @@
 package com.sasaj.lastfmapp.domain.entity;
 
+import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
@@ -15,7 +16,8 @@ public class Image extends BaseModel {
     @PrimaryKey(autoGenerate = true)
     private long id;
 
-    private long mbid;
+    @ColumnInfo(name = "artist_mbid")
+    private String artistMbid;
 
     @SerializedName("#text")
     @Expose
@@ -47,12 +49,12 @@ public class Image extends BaseModel {
         this.id = id;
     }
 
-    public long getMbid() {
-        return mbid;
+    public String getArtistMbid() {
+        return artistMbid;
     }
 
-    public void setMbid(long mbid) {
-        this.mbid = mbid;
+    public void setArtistMbid(String artistMbid) {
+        this.artistMbid = artistMbid;
     }
 
     public String getText() {

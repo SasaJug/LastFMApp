@@ -14,7 +14,7 @@ import com.sasaj.lastfmapp.domain.entity.Image;
  * Created by DS on 1/21/2018.
  */
 
-@Database(entities = {Artist.class, Image.class}, version = 1, exportSchema = false)
+@Database(entities = {Artist.class, Image.class}, version = 7, exportSchema = false)
 @TypeConverters(DateTypeConverter.class)
 public abstract class LastFmDatabase extends RoomDatabase{
 

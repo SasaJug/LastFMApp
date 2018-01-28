@@ -1,17 +1,16 @@
 package com.sasaj.lastfmapp.domain;
 
 import android.content.Context;
+import android.support.v4.util.Pair;
 import android.util.Log;
 
 import com.sasaj.lastfmapp.Repository;
 import com.sasaj.lastfmapp.domain.entity.Artist;
-import com.sasaj.lastfmapp.domain.entity.Chart;
 import com.sasaj.lastfmapp.httpclient.RetrofitClient;
 
 import java.util.List;
 
 import io.reactivex.Flowable;
-import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -50,7 +49,10 @@ public class LastFmRepository implements Repository {
         RetrofitClient.getInstance().getService().listChartArtists(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
                 .toFlowable()
                 .subscribeOn(Schedulers.io())
-                .doOnNext(chart -> DatabaseCreator.getInstance(context).artistDao().insertAll(chart.getArtists().getArtist()))
-                .subscribe(chart -> Log.e(LOG_TAG, "size " + chart.getArtists().getArtist().size()));
+                .flatMap(chart -> Flowable.fromIterable(chart.getArtists().getArtist()))
+                .doOnNext(artist -> DatabaseCreator.getInstance(context).artistDao().insert(artist))
+                .flatMap(artist -> Flowable.fromIterable(artist.getImage()), (artist, image) -> new Pair<>(image, artist))
+                .subscribe(pair -> DatabaseCreator.getInstance(context).getOpenHelper().getWritableDatabase()
+                        .execSQL("INSERT INTO images(artist_mbid, text, size) VALUES (?, ?, ?)",new String[] {pair.second.getMbid(), pair.first.getText(), pair.first.getSize()}));
     }
 }
