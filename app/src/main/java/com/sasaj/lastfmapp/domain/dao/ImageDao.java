@@ -18,9 +18,13 @@ import io.reactivex.Flowable;
 @Dao
 public interface ImageDao {
 
-    // Returns single image
+
+    // Returns all images fro specified mbid
     @Query("SELECT * FROM images WHERE artist_mbid = :mbid")
-    Flowable<List<Image>> getImagesForMbid(long mbid);
+    Flowable<List<Image>> getImagesForMbid(String mbid);
+
+    @Query("SELECT * FROM images WHERE artist_mbid = :mbid AND size = 'thumbnail'")
+    Flowable<List<Image>> getArtistThumbnail(String mbid);
 
 //    // Inserts single image
 //    @Query("INSERT INTO images('artist_mbid','text','size') VALUES (:mbid, :text, :size)")

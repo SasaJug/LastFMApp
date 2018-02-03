@@ -8,8 +8,9 @@ import android.support.v7.widget.Toolbar;
 
 import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.ui.adapter.MainPagerAdapter;
+import com.sasaj.lastfmapp.ui.interfaces.OnFragmentInteractionListener;
 
-public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
     private MainPagerAdapter adapterViewPager;
     private TabLayout tabLayout;
@@ -31,6 +32,4 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(vpPager);
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.sasaj.lastfmapp.ui;
+package com.sasaj.lastfmapp.ui.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,25 +10,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.entity.Artist;
-import com.sasaj.lastfmapp.ui.adapter.ArtistAdapter;
-import com.sasaj.lastfmapp.utility.InjectorUtils;
+import com.sasaj.lastfmapp.domain.entity.Track;
+import com.sasaj.lastfmapp.httpclient.RetrofitClient;
+import com.sasaj.lastfmapp.ui.interfaces.OnFragmentInteractionListener;
+import com.sasaj.lastfmapp.ui.adapter.TracksAdapter;
 
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link OnFragmentInteractionListener} interface
+ * {@link OnFragmentInteractionListener} interfaces
  * to handle interaction events.
- * Use the {@link ArtistsFragment#newInstance} factory method to
+ * Use the {@link TracksFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ArtistsFragment extends Fragment {
+public class TracksFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,9 +40,9 @@ public class ArtistsFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView list;
-    private ArtistAdapter adapter;
+    private TracksAdapter adapter;
 
-    public ArtistsFragment() {
+    public TracksFragment() {
         // Required empty public constructor
     }
 
@@ -52,18 +52,17 @@ public class ArtistsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ArtistsFragment.
+     * @return A new instance of fragment TracksFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ArtistsFragment newInstance(String param1, String param2) {
-        ArtistsFragment fragment = new ArtistsFragment();
+    public static TracksFragment newInstance(String param1, String param2) {
+        TracksFragment fragment = new TracksFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -89,22 +88,14 @@ public class ArtistsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.fragment_artists, container, false);
+        View root = inflater.inflate(R.layout.fragment_tracks, container, false);
 
-        list = root.findViewById(R.id.artist_list);
+        list = root.findViewById(R.id.track_list);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ArtistAdapter(getContext());
+        adapter = new TracksAdapter(getContext());
         list.setAdapter(adapter);
-        getArtists();
-        if(savedInstanceState == null)
-            InjectorUtils.provideRepository(getContext()).refreshArtists();
+        getTracks();
         return root;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
     }
 
     @Override
@@ -113,15 +104,15 @@ public class ArtistsFragment extends Fragment {
         mListener = null;
     }
 
-    public void getArtists() {
-        InjectorUtils.provideRepository(getContext()).getArtists()
+    public void getTracks() {
+        RetrofitClient.getInstance().getService().listChartTracks(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(this::setArtistsList);
+                .subscribe(topTracks -> setTracksList(topTracks.getTracks().getTrack()));
     }
 
-    public void setArtistsList(List<Artist> artists) {
+    private void setTracksList(List<Track> tracks){
         if (adapter != null)
-            adapter.setList(artists);
+            adapter.setList(tracks);
     }
 }

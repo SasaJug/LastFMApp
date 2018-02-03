@@ -1,9 +1,9 @@
-package com.sasaj.lastfmapp.ui;
+package com.sasaj.lastfmapp.ui.interfaces;
 
 import android.net.Uri;
 
 /**
- * Created by DS on 1/20/2018.
+ * Created by sjugurdzija on 1/20/2018.
  */
 
 /**
@@ -11,10 +11,6 @@ import android.net.Uri;
  * fragment to allow an interaction in this fragment to be communicated
  * to the activity and potentially other fragments contained in that
  * activity.
- * <p>
- * See the Android Training lesson <a href=
- * "http://developer.android.com/training/basics/fragments/communicating.html"
- * >Communicating with Other Fragments</a> for more information.
  */
 public interface OnFragmentInteractionListener {
 

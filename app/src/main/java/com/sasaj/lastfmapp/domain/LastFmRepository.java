@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.sasaj.lastfmapp.Repository;
 import com.sasaj.lastfmapp.domain.entity.Artist;
+import com.sasaj.lastfmapp.domain.entity.Image;
 import com.sasaj.lastfmapp.httpclient.RetrofitClient;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class LastFmRepository implements Repository {
     private static LastFmRepository sInstance;
     private final Context context;
 
-    public LastFmRepository(Context context) {
+    private LastFmRepository(Context context) {
         this.context = context;
     }
 
@@ -49,10 +50,14 @@ public class LastFmRepository implements Repository {
         RetrofitClient.getInstance().getService().listChartArtists(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
                 .toFlowable()
                 .subscribeOn(Schedulers.io())
-                .flatMap(chart -> Flowable.fromIterable(chart.getArtists().getArtist()))
-                .doOnNext(artist -> DatabaseCreator.getInstance(context).artistDao().insert(artist))
-                .flatMap(artist -> Flowable.fromIterable(artist.getImage()), (artist, image) -> new Pair<>(image, artist))
-                .subscribe(pair -> DatabaseCreator.getInstance(context).getOpenHelper().getWritableDatabase()
-                        .execSQL("INSERT INTO images(artist_mbid, text, size) VALUES (?, ?, ?)",new String[] {pair.second.getMbid(), pair.first.getText(), pair.first.getSize()}));
+                .doOnNext(chart -> {
+                    DatabaseCreator.getInstance(context).artistDao().insertAll(chart.getArtists().getArtist());
+                    for (Artist artist : chart.getArtists().getArtist()) {
+                        for(Image image : artist.getImage())
+                        DatabaseCreator.getInstance(context).getOpenHelper().getWritableDatabase()
+                                .execSQL("Insert into images(text, size, artist_mbid) values(?,?,?)",new String[]{image.getText(), image.getSize(), artist.getMbid()});
+                    }
+                })
+                .subscribe(chart -> Log.e(LOG_TAG, "size " + chart.getArtists().getArtist().size()));
     }
 }
