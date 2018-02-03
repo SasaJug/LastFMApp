@@ -24,7 +24,7 @@ public interface ArtistDao {
 
     // Returns single artist
     @Query("SELECT * FROM artists WHERE mbid = :mbid LIMIT 1")
-    Flowable<Artist> get(long mbid);
+    Flowable<Artist> get(String mbid);
 
     // Inserts multiple artists
     @Insert(onConflict = OnConflictStrategy.REPLACE)

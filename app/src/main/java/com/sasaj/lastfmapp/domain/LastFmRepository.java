@@ -60,4 +60,13 @@ public class LastFmRepository implements Repository {
                 })
                 .subscribe(chart -> Log.e(LOG_TAG, "size " + chart.getArtists().getArtist().size()));
     }
+
+    public Flowable<Artist> getArtist(String mbid){
+         return DatabaseCreator.getInstance(context).artistDao().get(mbid);
+    }
+
+
+    public Flowable<List<Image>> getImages(String mbid){
+        return DatabaseCreator.getInstance(context).imageDao().getImagesForMbid(mbid);
+    }
 }

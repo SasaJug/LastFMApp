@@ -1,6 +1,7 @@
 package com.sasaj.lastfmapp.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,11 +13,15 @@ import android.view.ViewGroup;
 
 import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.domain.entity.Artist;
+import com.sasaj.lastfmapp.ui.SingleItemActivity;
 import com.sasaj.lastfmapp.ui.adapter.ReactiveArtistItemHolder;
 import com.sasaj.lastfmapp.ui.adapter.ReactiveRecyclerAdapter;
 import com.sasaj.lastfmapp.ui.interfaces.OnFragmentInteractionListener;
 import com.sasaj.lastfmapp.ui.adapter.ArtistAdapter;
 import com.sasaj.lastfmapp.utility.InjectorUtils;
+
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 
 /**
@@ -33,6 +38,7 @@ public class ArtistsFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private RecyclerView list;
     private ArtistAdapter adapter;
+    private Disposable disposable;
 
     public ArtistsFragment() {
         // Required empty public constructor
@@ -82,10 +88,14 @@ public class ArtistsFragment extends Fragment {
         };
         ReactiveRecyclerAdapter<Artist> reactiveRecyclerAdapter = new ReactiveRecyclerAdapter<>(InjectorUtils.provideRepository(getContext()).getArtists().toObservable(), viewAndHolderFactory);
         list.setAdapter(reactiveRecyclerAdapter);
-//        getArtists();
-        if(savedInstanceState == null)
+        if (savedInstanceState == null) {
             InjectorUtils.provideRepository(getContext()).refreshArtists();
-        reactiveRecyclerAdapter.getViewClickedObservable().subscribe(artist -> Log.e(TAG, "onCreateView: "+((Artist)artist).getName()));
+        }
+        disposable = reactiveRecyclerAdapter.getViewClickedObservable()
+                .subscribe(artist -> {
+                    Intent intent = SingleItemActivity.intentFactory(getContext(), SingleItemActivity.ARTIST, artist.getMbid());
+                    startActivity(intent);
+                });
         return root;
     }
 
@@ -98,18 +108,9 @@ public class ArtistsFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        disposable.dispose();
         mListener = null;
     }
-//
-//    public void getArtists() {
-//        InjectorUtils.provideRepository(getContext()).getArtists()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(this::setArtistsList);
-//    }
-//
-//    public void setArtistsList(List<Artist> artists) {
-//        if (adapter != null)
-//            adapter.setList(artists);
-//    }
+
+
 }

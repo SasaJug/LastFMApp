@@ -7,9 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.sasaj.lastfmapp.R;
+import com.sasaj.lastfmapp.domain.LastFmRepository;
+import com.sasaj.lastfmapp.domain.entity.Artist;
+import com.sasaj.lastfmapp.domain.entity.Image;
 import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,8 +76,16 @@ public class SingleArtistFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_single_artist, container, false);
+        View root = inflater.inflate(R.layout.fragment_single_artist, container, false);
+        TextView name = root.findViewById(R.id.artist_name);
+        ImageView image = root.findViewById(R.id.artist_image);
+
+        Artist artist = LastFmRepository.getInstance(getContext()).getArtist(mbid).blockingFirst();
+        List<Image> artistImages = LastFmRepository.getInstance(getContext()).getImages(mbid).blockingFirst();
+
+        name.setText(artist.getName());
+        Picasso.with(getActivity()).load(artistImages.get(artistImages.size() - 1).getText()).into(image);
+        return root;
     }
 
     @Override

@@ -11,8 +11,9 @@ import android.support.v7.widget.Toolbar;
 import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.ui.fragment.SingleArtistFragment;
 import com.sasaj.lastfmapp.ui.fragment.SingleTrackFragment;
+import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
 
-public class SingleItemActivity extends AppCompatActivity {
+public class SingleItemActivity extends AppCompatActivity implements OnSingleFragmentInteractionListener{
 
     public static final String TYPE = "type";
     public static final String MBID = "mbid";
