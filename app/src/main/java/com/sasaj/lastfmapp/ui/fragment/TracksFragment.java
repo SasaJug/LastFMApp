@@ -105,10 +105,10 @@ public class TracksFragment extends Fragment {
     }
 
     public void getTracks() {
-        RetrofitClient.getInstance().getService().listChartTracks(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(topTracks -> setTracksList(topTracks.getTracks().getTrack()));
+//        RetrofitClient.getInstance().getService().listChartTracks(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(topTracks -> setTracksList(topTracks.getTracks().getTrack()));
     }
 
     private void setTracksList(List<Track> tracks){

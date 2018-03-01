@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by DS on 1/21/2018.
+ * Created by sjugurdzija on 1/21/2018.
  */
 
 public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksViewHolder> {

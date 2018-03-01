@@ -1,7 +1,11 @@
 package com.sasaj.lastfmapp.httpclient;
 
-import com.sasaj.lastfmapp.BuildConfig;
+import com.sasaj.lastfmapp.domain.entity.Chart;
+import com.sasaj.lastfmapp.domain.entity.TopTracks;
 
+import javax.inject.Singleton;
+
+import io.reactivex.Single;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -9,15 +13,15 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by DS on 1/18/2018.
+ * Created by sjugurdzija on 1/18/2018.
  */
 
-public class RetrofitClient {
+@Singleton
+public class RetrofitClient implements HttpClient {
 
     public static final String API_URL = "http://ws.audioscrobbler.com/2.0/";
     public static final String API_KEY = "9a5c3e40b7b6f4846369794aa48daa60";
     public static final int LIMIT = 10;
-    private static RetrofitClient instance = null;
     private Retrofit retrofit;
     private OkHttpClient client;
 
@@ -28,11 +32,6 @@ public class RetrofitClient {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
-//        okHttpBuilder.addInterceptor(new TokenInterceptor());
-
-        if (BuildConfig.DEBUG) {
-//            okHttpBuilder.addInterceptor(loggingInterceptor);
-        }
 
         client = okHttpBuilder.build();
 
@@ -45,15 +44,17 @@ public class RetrofitClient {
         service = retrofit.create(LastFmService.class);
     }
 
-    public static RetrofitClient getInstance() {
-        if (instance == null) {
-            instance = new RetrofitClient();
-        }
-
-        return instance;
+    private LastFmService getService() {
+        return service;
     }
 
-    public LastFmService getService() {
-        return service;
+    @Override
+    public Single<Chart> getChartArtists(int page, int limit) {
+        return getService().listChartArtists(API_KEY, page, limit);
+    }
+
+    @Override
+    public Single<TopTracks> getChartTracks(int page, int limit) {
+        return getService().listChartTracks(API_KEY, page, limit);
     }
 }

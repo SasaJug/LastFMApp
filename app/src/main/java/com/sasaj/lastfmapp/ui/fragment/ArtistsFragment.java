@@ -11,14 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
+import com.sasaj.lastfmapp.di.LastFmComponent;
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.ui.SingleItemActivity;
 import com.sasaj.lastfmapp.ui.adapter.ReactiveArtistItemHolder;
 import com.sasaj.lastfmapp.ui.adapter.ReactiveRecyclerAdapter;
 import com.sasaj.lastfmapp.ui.interfaces.OnFragmentInteractionListener;
 import com.sasaj.lastfmapp.ui.adapter.ArtistAdapter;
-import com.sasaj.lastfmapp.utility.InjectorUtils;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -86,10 +87,11 @@ public class ArtistsFragment extends Fragment {
                     new ReactiveArtistItemHolder<>(view, getActivity())
             );
         };
-        ReactiveRecyclerAdapter<Artist> reactiveRecyclerAdapter = new ReactiveRecyclerAdapter<>(InjectorUtils.provideRepository(getContext()).getArtists().toObservable(), viewAndHolderFactory);
+        LastFmComponent component = ((LastFmApplication)getActivity().getApplication()).getLastFmComponent();
+        ReactiveRecyclerAdapter<Artist> reactiveRecyclerAdapter = new ReactiveRecyclerAdapter<>(component.getRepository().getArtists().toObservable(), viewAndHolderFactory);
         list.setAdapter(reactiveRecyclerAdapter);
         if (savedInstanceState == null) {
-            InjectorUtils.provideRepository(getContext()).refreshArtists();
+            component.getRepository().refreshArtists();
         }
         disposable = reactiveRecyclerAdapter.getViewClickedObservable()
                 .subscribe(artist -> {

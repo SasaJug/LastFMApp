@@ -1,7 +1,6 @@
 package com.sasaj.lastfmapp.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,8 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.LastFmRepository;
+import com.sasaj.lastfmapp.Repository;
+import com.sasaj.lastfmapp.di.LastFmComponent;
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Image;
 import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
@@ -80,8 +81,11 @@ public class SingleArtistFragment extends Fragment {
         TextView name = root.findViewById(R.id.artist_name);
         ImageView image = root.findViewById(R.id.artist_image);
 
-        Artist artist = LastFmRepository.getInstance(getContext()).getArtist(mbid).blockingFirst();
-        List<Image> artistImages = LastFmRepository.getInstance(getContext()).getImages(mbid).blockingFirst();
+        LastFmComponent component = ((LastFmApplication)getActivity().getApplication()).getLastFmComponent();
+        Repository repository = component.getRepository();
+
+        Artist artist = repository.getArtist(mbid).blockingFirst();
+        List<Image> artistImages = repository.getImages(mbid).blockingFirst();
 
         name.setText(artist.getName());
         Picasso.with(getActivity()).load(artistImages.get(artistImages.size() - 1).getText()).into(image);

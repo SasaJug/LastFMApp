@@ -13,11 +13,8 @@ import com.sasaj.lastfmapp.domain.converter.ImageConverter;
 import java.util.List;
 
 
-import lombok.Data;
-
 import static com.sasaj.lastfmapp.domain.constants.TableNames.ARTIST_TABLE_NAME;
 
-@Data
 @Entity(tableName = ARTIST_TABLE_NAME)
 public class Artist extends BaseModel {
 
