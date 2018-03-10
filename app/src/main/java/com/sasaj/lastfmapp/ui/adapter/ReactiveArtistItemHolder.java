@@ -34,7 +34,7 @@ public class ReactiveArtistItemHolder<T> extends ReactiveRecyclerAdapter.Reactiv
         this.artist = currentItem;
 
         try {
-            Picasso.with(context).load(((Artist) artist).getImage().get(0).getText()).into(thumbnail);
+            Picasso.with(context).load(((Artist) artist).getImage().get(0).getText()).placeholder(R.drawable.ic_launcher_foreground).into(thumbnail);
         } catch (Exception e) {
             e.printStackTrace();
         }

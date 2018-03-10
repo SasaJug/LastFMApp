@@ -10,8 +10,10 @@ import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.ui.adapter.MainPagerAdapter;
 import com.sasaj.lastfmapp.ui.interfaces.OnFragmentInteractionListener;
 
+
 public class MainActivity extends AppCompatActivity implements OnFragmentInteractionListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private MainPagerAdapter adapterViewPager;
     private TabLayout tabLayout;
     private ViewPager vpPager;
@@ -31,5 +33,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(vpPager);
+
     }
+
 }

@@ -1,5 +1,7 @@
 package com.sasaj.lastfmapp.httpclient;
 
+import android.content.Context;
+
 import com.sasaj.lastfmapp.domain.entity.Chart;
 import com.sasaj.lastfmapp.domain.entity.TopTracks;
 
@@ -27,12 +29,12 @@ public class RetrofitClient implements HttpClient {
 
     private LastFmService service;
 
-    public RetrofitClient() {
+    public RetrofitClient(Context context) {
 
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        OfflineMockInterceptor mockInterceptor = new OfflineMockInterceptor(context);
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder();
-
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor(mockInterceptor);
         client = okHttpBuilder.build();
 
         retrofit = new Retrofit.Builder().baseUrl(API_URL)

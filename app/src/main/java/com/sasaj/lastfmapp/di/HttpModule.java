@@ -23,8 +23,8 @@ public class HttpModule {
     }
 
     @Provides
-    HttpClient provideHttpClient() {
-        return new RetrofitClient();
+    HttpClient provideHttpClient(Context context) {
+        return new RetrofitClient(context);
     }
 
 

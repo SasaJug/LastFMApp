@@ -1,4 +1,4 @@
-package com.sasaj.lastfmapp;
+package com.sasaj.lastfmapp.domain;
 
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Chart;

@@ -1,11 +1,7 @@
 package com.sasaj.lastfmapp.domain;
 
-import android.content.Context;
-import android.support.v4.util.Pair;
 import android.util.Log;
 
-import com.sasaj.lastfmapp.LastFmApplication;
-import com.sasaj.lastfmapp.Repository;
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Image;
 import com.sasaj.lastfmapp.httpclient.HttpClient;
