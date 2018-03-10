@@ -34,7 +34,7 @@ public class RetrofitClient implements HttpClient {
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         OfflineMockInterceptor mockInterceptor = new OfflineMockInterceptor(context);
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder().addInterceptor(loggingInterceptor).addInterceptor(mockInterceptor);
+        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder().addInterceptor(loggingInterceptor);
         client = okHttpBuilder.build();
 
         retrofit = new Retrofit.Builder().baseUrl(API_URL)

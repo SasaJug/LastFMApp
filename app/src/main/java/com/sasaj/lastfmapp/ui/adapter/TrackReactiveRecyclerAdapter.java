@@ -6,25 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding2.view.RxView;
-
-import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
+import java.util.Collections;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
 
 /**
- * Created by sjugurdzija on 2/3/2018.
+ * Created by sjugurdzija on 3/10/2018.
  */
 
-
-public class ReactiveRecyclerAdapter<T> extends RecyclerView.Adapter<ReactiveRecyclerAdapter.ReactiveViewHolder<T>> {
+public class TrackReactiveRecyclerAdapter<T>  extends RecyclerView.Adapter<TrackReactiveRecyclerAdapter.ReactiveViewHolder<T>>{
     private final Observable<List<T>> observable;
     private final ReactiveViewHolderFactory<T> viewHolderFactory;
     private List<T> currentList;
 
-    public ReactiveRecyclerAdapter(Observable<List<T>> observable, ReactiveViewHolderFactory<T> viewHolderFactory) {
+    public TrackReactiveRecyclerAdapter(Observable<List<T>> observable, ReactiveViewHolderFactory<T> viewHolderFactory) {
         this.viewHolderFactory = viewHolderFactory;
         this.currentList = Collections.emptyList();
         this.observable = observable;
@@ -42,9 +40,9 @@ public class ReactiveRecyclerAdapter<T> extends RecyclerView.Adapter<ReactiveRec
     }
 
     @Override
-    public ReactiveViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int pViewType) {
-        ReactiveViewHolderFactory.ViewAndHolder<T> viewAndHolder = viewHolderFactory.createViewAndHolder(parent, pViewType);
-        ReactiveViewHolder<T> viewHolder = viewAndHolder.viewHolder;
+    public TrackReactiveRecyclerAdapter.ReactiveViewHolder<T> onCreateViewHolder(@NonNull ViewGroup parent, int pViewType) {
+        TrackReactiveRecyclerAdapter.ReactiveViewHolderFactory.ViewAndHolder<T> viewAndHolder = viewHolderFactory.createViewAndHolder(parent, pViewType);
+        TrackReactiveRecyclerAdapter.ReactiveViewHolder<T> viewHolder = viewAndHolder.viewHolder;
 
         RxView.clicks(viewAndHolder.view)
                 .takeUntil(RxView.detaches(parent))
@@ -86,6 +84,6 @@ public class ReactiveRecyclerAdapter<T> extends RecyclerView.Adapter<ReactiveRec
             }
         }
 
-        ViewAndHolder<T> createViewAndHolder(@NonNull ViewGroup parent, int pViewType);
+    ViewAndHolder<T> createViewAndHolder(@NonNull ViewGroup parent, int pViewType);
     }
 }

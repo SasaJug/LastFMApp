@@ -1,6 +1,7 @@
 package com.sasaj.lastfmapp.ui.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,16 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
+import com.sasaj.lastfmapp.di.LastFmComponent;
+import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Track;
-import com.sasaj.lastfmapp.httpclient.RetrofitClient;
+import com.sasaj.lastfmapp.ui.SingleItemActivity;
+import com.sasaj.lastfmapp.ui.adapter.ReactiveArtistItemHolder;
+import com.sasaj.lastfmapp.ui.adapter.ArtistReactiveRecyclerAdapter;
+import com.sasaj.lastfmapp.ui.adapter.ReactiveTrackItemHolder;
+import com.sasaj.lastfmapp.ui.adapter.TrackReactiveRecyclerAdapter;
 import com.sasaj.lastfmapp.ui.interfaces.OnFragmentInteractionListener;
-import com.sasaj.lastfmapp.ui.adapter.TracksAdapter;
 
-import java.util.List;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.disposables.Disposable;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +44,7 @@ public class TracksFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private RecyclerView list;
-    private TracksAdapter adapter;
+    private Disposable disposable;
 
     public TracksFragment() {
         // Required empty public constructor
@@ -92,27 +96,33 @@ public class TracksFragment extends Fragment {
 
         list = root.findViewById(R.id.track_list);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new TracksAdapter(getContext());
-        list.setAdapter(adapter);
-        getTracks();
+        TrackReactiveRecyclerAdapter.ReactiveViewHolderFactory<Track> viewAndHolderFactory = (parent, pViewType) -> {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_tracks, parent, false);
+            return new TrackReactiveRecyclerAdapter.ReactiveViewHolderFactory.ViewAndHolder<Track>(
+                    view,
+                    new ReactiveTrackItemHolder<>(view, getActivity())
+            );
+        };
+        LastFmComponent component = ((LastFmApplication)getActivity().getApplication()).getLastFmComponent();
+        TrackReactiveRecyclerAdapter<Track> reactiveRecyclerAdapter = new TrackReactiveRecyclerAdapter<Track>(component.getRepository().getTracks().toObservable(), viewAndHolderFactory);
+        list.setAdapter(reactiveRecyclerAdapter);
+        if (savedInstanceState == null) {
+            component.getRepository().refreshTracks();
+        }
+        disposable = reactiveRecyclerAdapter.getViewClickedObservable()
+                .subscribe(track -> {
+                    Intent intent = SingleItemActivity.intentFactory(getContext(), SingleItemActivity.TRACK, track.getId());
+                    startActivity(intent);
+                });
         return root;
     }
+
 
     @Override
     public void onDetach() {
         super.onDetach();
+        disposable.dispose();
         mListener = null;
     }
 
-    public void getTracks() {
-//        RetrofitClient.getInstance().getService().listChartTracks(RetrofitClient.API_KEY, 1, RetrofitClient.LIMIT)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(topTracks -> setTracksList(topTracks.getTracks().getTrack()));
-    }
-
-    private void setTracksList(List<Track> tracks){
-        if (adapter != null)
-            adapter.setList(tracks);
-    }
 }

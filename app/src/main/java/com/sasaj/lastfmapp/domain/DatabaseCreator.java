@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Image;
+import com.sasaj.lastfmapp.domain.entity.Track;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class DatabaseCreator implements LocalStorage{
 
     public DatabaseCreator(Context applicationContext) {
         lastFmDatabase = Room.databaseBuilder(applicationContext,
-                LastFmDatabase.class, LastFmDatabase.DATABASE_NAME).build();
+                LastFmDatabase.class, LastFmDatabase.DATABASE_NAME).fallbackToDestructiveMigration().build();
     }
 
     public Flowable<List<Artist>> getArtists() {
@@ -39,12 +40,27 @@ public class DatabaseCreator implements LocalStorage{
     }
 
     @Override
-    public void insertAll(List<Artist> artists) {
+    public void insertAllArtists(List<Artist> artists) {
         lastFmDatabase.artistDao().insertAll(artists);
         for (Artist artist : artists) {
             for(Image image : artist.getImage())
                 lastFmDatabase.getOpenHelper().getWritableDatabase()
                         .execSQL("Insert into images(text, size, artist_mbid) values(?,?,?)",new String[]{image.getText(), image.getSize(), artist.getMbid()});
         }
+    }
+
+    @Override
+    public Flowable<List<Track>> getTracks() {
+        return lastFmDatabase.trackDao().getAll();
+    }
+
+    @Override
+    public Flowable<Track> getTrack(long id) {
+        return lastFmDatabase.trackDao().get(id);
+    }
+
+    @Override
+    public void insertAllTracks(List<Track> tracks) {
+        lastFmDatabase.trackDao().insertAll(tracks);
     }
 }

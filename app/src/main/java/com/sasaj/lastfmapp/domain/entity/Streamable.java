@@ -9,6 +9,7 @@ public class Streamable {
     @SerializedName("#text")
     @Expose
     private String text;
+
     @SerializedName("fulltrack")
     @Expose
     private String fulltrack;

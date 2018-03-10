@@ -36,7 +36,7 @@ public class OfflineMockInterceptor implements Interceptor {
         String path = request.url().encodedPath();
 
     /* I put a 'hello' file in debug/assets/mockData */
-        InputStream stream = mContext.getAssets().open("ChartResponseSample.txt");
+        InputStream stream = mContext.getAssets().open("ChartArtistsResponseSampleJson.txt");
 
     /* Just read the file. */
         String json = FileUtility.parseStream(stream);

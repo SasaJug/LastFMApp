@@ -1,15 +1,23 @@
 package com.sasaj.lastfmapp.ui.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
+import com.sasaj.lastfmapp.di.LastFmComponent;
+import com.sasaj.lastfmapp.domain.Repository;
+import com.sasaj.lastfmapp.domain.entity.Track;
 import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,8 +29,9 @@ import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
  */
 public class SingleTrackFragment extends Fragment {
     private static final String MBID = "mbid";
+    private static final String ID = "id";
 
-    private String mbid;
+    private long id;
 
     private OnSingleFragmentInteractionListener mListener;
 
@@ -30,22 +39,20 @@ public class SingleTrackFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param mbid mbid.
+     * @param long id.
      * @return A new instance of fragment SingleArtistFragment.
      */
-    public static SingleTrackFragment newInstance(String mbid) {
+    public static SingleTrackFragment newInstance(long id) {
         SingleTrackFragment fragment = new SingleTrackFragment();
         Bundle args = new Bundle();
-        args.putString(MBID, mbid);
+        args.putLong(ID, id);
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -62,14 +69,26 @@ public class SingleTrackFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mbid = getArguments().getString(MBID);
+            id = getArguments().getLong(ID);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_single_track, container, false);
+        View root = inflater.inflate(R.layout.fragment_single_track, container, false);
+        TextView name = root.findViewById(R.id.track_name);
+        ImageView image = root.findViewById(R.id.track_image);
+
+        LastFmComponent component = ((LastFmApplication)getActivity().getApplication()).getLastFmComponent();
+        Repository repository = component.getRepository();
+
+        Track track = repository.getTrack(id).blockingFirst();
+
+        name.setText(track.getName());
+        Picasso.with(getActivity()).load(track.getImages().get(track.getImages().size() - 1).getText()).into(image);
+        return root;
     }
 
     @Override

@@ -17,6 +17,7 @@ public class SingleItemActivity extends AppCompatActivity implements OnSingleFra
 
     public static final String TYPE = "type";
     public static final String MBID = "mbid";
+    public static final String ID = "id";
     public static final int ARTIST = 1;
     public static final int TRACK = 2;
     public static final String ARTIST_FRAGMENT_TAG = "artist_fragment";
@@ -26,6 +27,14 @@ public class SingleItemActivity extends AppCompatActivity implements OnSingleFra
         Intent intent = new Intent(context, SingleItemActivity.class);
         intent.putExtra(TYPE, type);
         intent.putExtra(MBID, mbid);
+        return intent;
+    }
+
+
+    public static Intent intentFactory(Context context, int type, long id) {
+        Intent intent = new Intent(context, SingleItemActivity.class);
+        intent.putExtra(TYPE, type);
+        intent.putExtra(ID, id);
         return intent;
     }
 
@@ -42,27 +51,35 @@ public class SingleItemActivity extends AppCompatActivity implements OnSingleFra
     }
 
     private void setView(Intent intent) {
-        String mbid = intent.getStringExtra(MBID);
+
+
         FragmentManager fm = getSupportFragmentManager();
-        if (mbid != null) {
+
             switch (intent.getIntExtra(TYPE, -1)) {
                 case ARTIST:
-                    SingleArtistFragment artist_fragment = SingleArtistFragment.newInstance(mbid);
-                    FragmentTransaction ft1 = fm.beginTransaction();
-                    ft1.replace(R.id.container, artist_fragment, ARTIST_FRAGMENT_TAG);
-                    ft1.commitAllowingStateLoss();
+                    String mbid = intent.getStringExtra(MBID);
+                    if (mbid != null) {
+                        SingleArtistFragment artist_fragment = SingleArtistFragment.newInstance(mbid);
+                        FragmentTransaction ft1 = fm.beginTransaction();
+                        ft1.replace(R.id.container, artist_fragment, ARTIST_FRAGMENT_TAG);
+                        ft1.commitAllowingStateLoss();
+                    } else {
+                        throw new RuntimeException("mbid is missing");
+                    }
                     break;
                 case TRACK:
-                    SingleTrackFragment trackFragment = SingleTrackFragment.newInstance(mbid);
-                    FragmentTransaction ft2 = fm.beginTransaction();
-                    ft2.replace(R.id.container, trackFragment, TRACK_FRAGMENT_TAG);
-                    ft2.commitAllowingStateLoss();
+                    long id = intent.getLongExtra(ID, -1);
+                    if(id != -1){
+                        SingleTrackFragment trackFragment = SingleTrackFragment.newInstance(id);
+                        FragmentTransaction ft2 = fm.beginTransaction();
+                        ft2.replace(R.id.container, trackFragment, TRACK_FRAGMENT_TAG);
+                        ft2.commitAllowingStateLoss();
+                    } else {
+                        throw new RuntimeException("id is missing");
+                    }
                     break;
                 default:
                     throw new RuntimeException("type is missing");
             }
-        } else {
-            throw new RuntimeException("mbid is missing");
-        }
     }
 }

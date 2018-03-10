@@ -6,45 +6,45 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.entity.Artist;
+import com.sasaj.lastfmapp.domain.entity.Track;
 import com.squareup.picasso.Picasso;
 
 /**
- * Created by sjugurdzija on 2/3/2018.
+ * Created by sjugurdzija on 3/10/2018.
  */
 
-public class ReactiveArtistItemHolder<T> extends ArtistReactiveRecyclerAdapter.ReactiveViewHolder<T> {
+public class ReactiveTrackItemHolder<T> extends TrackReactiveRecyclerAdapter.ReactiveViewHolder<T>  {
 
     private Context context;
     private ImageView thumbnail;
     private TextView name;
-    private TextView count;
-    private T artist;
+    private TextView artist;
+    private T track;
 
-    public ReactiveArtistItemHolder(View itemView, Context context) {
+    public ReactiveTrackItemHolder(View itemView, Context context) {
         super(itemView);
         thumbnail = itemView.findViewById(R.id.thumbnail);
         name = itemView.findViewById(R.id.name);
-        count = itemView.findViewById(R.id.count);
+        artist = itemView.findViewById(R.id.artist);
         this.context = context;
     }
 
     @Override
     public void setCurrentItem(T currentItem) {
-        this.artist = currentItem;
+        this.track = currentItem;
 
         try {
-            Picasso.with(context).load(((Artist) artist).getImage().get(0).getText()).placeholder(R.drawable.ic_launcher_foreground).into(thumbnail);
+            Picasso.with(context).load(((Track)track).getImages().get(0).getText()).placeholder(R.drawable.ic_launcher_foreground).into(thumbnail);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        name.setText(((Artist) artist).getName());
-        count.setText(((Artist) artist).getPlaycount());
+        name.setText(((Track)track).getName());
+        artist.setText(((Track)track).getArtist().getName());
 
 
     }
 
     public T getCurrentItem() {
-        return artist;
+        return track;
     }
 }

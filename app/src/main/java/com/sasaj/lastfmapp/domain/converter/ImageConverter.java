@@ -16,7 +16,6 @@ import java.util.List;
 
 public class ImageConverter {
 
-
     private static Gson gson = new Gson();
 
     @TypeConverter
@@ -32,7 +31,7 @@ public class ImageConverter {
     }
 
     @TypeConverter
-    public static String ImageListToString(List<Image> Images) {
+    public static String imageListToString(List<Image> Images) {
         return gson.toJson(Images);
     }
 }

@@ -2,6 +2,7 @@ package com.sasaj.lastfmapp.domain;
 
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Image;
+import com.sasaj.lastfmapp.domain.entity.Track;
 
 import java.util.List;
 
@@ -17,5 +18,9 @@ public interface LocalStorage {
     Flowable<Artist> getArtist(String mbid);
     Flowable<List<Image>> getImages(String mbid);
 
-    void insertAll(List<Artist> artists);
+    void insertAllArtists(List<Artist> artists);
+
+    Flowable<List<Track>> getTracks();
+    Flowable<Track> getTrack(long id);
+    void insertAllTracks(List<Track> tracks);
 }

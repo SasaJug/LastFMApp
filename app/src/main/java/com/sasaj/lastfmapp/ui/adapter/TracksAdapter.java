@@ -41,7 +41,7 @@ public class TracksAdapter extends RecyclerView.Adapter<TracksAdapter.TracksView
     @Override
     public void onBindViewHolder(TracksAdapter.TracksViewHolder holder, int position) {
         Track track = tracksList.get(position);
-        Picasso.with(context).load(track.getImage().get(0).getText()).into(holder.thumbnail);
+        Picasso.with(context).load(track.getImages().get(0).getText()).into(holder.thumbnail);
         holder.name.setText(track.getName());
         holder.artist.setText(track.getArtist().getName());
     }

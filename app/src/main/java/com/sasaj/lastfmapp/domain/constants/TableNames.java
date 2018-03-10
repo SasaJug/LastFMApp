@@ -1,7 +1,7 @@
 package com.sasaj.lastfmapp.domain.constants;
 
 /**
- * Created by DS on 1/21/2018.
+ * Created by sjugurdzija on 1/21/2018.
  */
 
 public class TableNames {

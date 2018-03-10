@@ -44,7 +44,6 @@ public class Artist extends BaseModel {
     @Expose
     private String streamable;
 
-
     @SerializedName("image")
     @Expose
     @TypeConverters(ImageConverter.class)
@@ -64,7 +63,7 @@ public class Artist extends BaseModel {
      * @param url
      */
     @Ignore
-    public Artist(String name, String playcount, String listeners, String mbid, String url, String streamable, List<Image> image) {
+    public Artist(String name, String playcount, String listeners, @NonNull String mbid, String url, String streamable, List<Image> image) {
         super();
         this.name = name;
         this.playcount = playcount;
