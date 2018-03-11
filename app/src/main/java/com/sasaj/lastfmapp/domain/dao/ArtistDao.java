@@ -36,4 +36,7 @@ public interface ArtistDao {
     // Deletes a single artist
     @Delete
     void delete(Artist artist);
+
+    @Query("DELETE FROM artists")
+    public void deleteAll();
 }

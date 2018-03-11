@@ -1,0 +1,117 @@
+{
+    "tracks": {
+        "track": [
+            {
+                "name": "All The Stars (with SZA)",
+                "duration": "0",
+                "playcount": "578064",
+                "listeners": "101514",
+                "mbid": "",
+                "url": "https://www.last.fm/music/Kendrick+Lamar/_/All+The+Stars+(with+SZA)",
+                "streamable": {
+                    "#text": "0",
+                    "fulltrack": "0"
+                },
+                "artist": {
+                    "name": "Kendrick Lamar",
+                    "mbid": "381086ea-f511-4aba-bdf9-71c753dc5077",
+                    "url": "https://www.last.fm/music/Kendrick+Lamar"
+                },
+                "image": [
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/34s/a4a35fcdf62b8a532039012653eeea14.png",
+                        "size": "small"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/64s/a4a35fcdf62b8a532039012653eeea14.png",
+                        "size": "medium"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/174s/a4a35fcdf62b8a532039012653eeea14.png",
+                        "size": "large"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/a4a35fcdf62b8a532039012653eeea14.png",
+                        "size": "extralarge"
+                    }
+                ]
+            },
+            {
+                "name": "God's Plan",
+                "duration": "0",
+                "playcount": "618209",
+                "listeners": "97443",
+                "mbid": "",
+                "url": "https://www.last.fm/music/Drake/_/God%27s+Plan",
+                "streamable": {
+                    "#text": "0",
+                    "fulltrack": "0"
+                },
+                "artist": {
+                    "name": "Drake",
+                    "mbid": "b49b81cc-d5b7-4bdd-aadb-385df8de69a6",
+                    "url": "https://www.last.fm/music/Drake"
+                },
+                "image": [
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/34s/a99b28b530049708ed7f8e866821ce77.png",
+                        "size": "small"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/64s/a99b28b530049708ed7f8e866821ce77.png",
+                        "size": "medium"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/174s/a99b28b530049708ed7f8e866821ce77.png",
+                        "size": "large"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/a99b28b530049708ed7f8e866821ce77.png",
+                        "size": "extralarge"
+                    }
+                ]
+            },
+            {
+                "name": "Pray For Me (with Kendrick Lamar)",
+                "duration": "0",
+                "playcount": "275330",
+                "listeners": "67117",
+                "mbid": "",
+                "url": "https://www.last.fm/music/The+Weeknd/_/Pray+For+Me+(with+Kendrick+Lamar)",
+                "streamable": {
+                    "#text": "0",
+                    "fulltrack": "0"
+                },
+                "artist": {
+                    "name": "The Weeknd",
+                    "mbid": "c8b03190-306c-4120-bb0b-6f2ebfc06ea9",
+                    "url": "https://www.last.fm/music/The+Weeknd"
+                },
+                "image": [
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/34s/6acfc003b195fc46694aa00b6968b3d4.png",
+                        "size": "small"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/64s/6acfc003b195fc46694aa00b6968b3d4.png",
+                        "size": "medium"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/174s/6acfc003b195fc46694aa00b6968b3d4.png",
+                        "size": "large"
+                    },
+                    {
+                        "#text": "https://lastfm-img2.akamaized.net/i/u/300x300/6acfc003b195fc46694aa00b6968b3d4.png",
+                        "size": "extralarge"
+                    }
+                ]
+            }
+        ],
+        "@attr": {
+            "page": "1",
+            "perPage": "3",
+            "totalPages": "7484314",
+            "total": "22452941"
+        }
+    }
+}

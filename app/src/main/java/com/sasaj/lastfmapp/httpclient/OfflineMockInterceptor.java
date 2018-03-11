@@ -1,6 +1,7 @@
 package com.sasaj.lastfmapp.httpclient;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.sasaj.lastfmapp.utility.FileUtility;
 
@@ -21,6 +22,7 @@ import okhttp3.ResponseBody;
 public class OfflineMockInterceptor implements Interceptor {
 
     private static final MediaType MEDIA_JSON = MediaType.parse("application/json");
+    private static final String TAG = OfflineMockInterceptor.class.getSimpleName();
     private Context mContext;
 
     public OfflineMockInterceptor(Context context) {
@@ -32,12 +34,11 @@ public class OfflineMockInterceptor implements Interceptor {
 
         Request request = chain.request();
 
-    /* http://sample.com/hello will return "/hello" */
-        String path = request.url().encodedPath();
 
-    /* I put a 'hello' file in debug/assets/mockData */
-        InputStream stream = mContext.getAssets().open("ChartArtistsResponseSampleJson.txt");
-
+//        String path = request.url().queryParameter("method");
+//        path = path.replace('.','_');
+//        InputStream stream = mContext.getAssets().open(path+".txt");
+        InputStream stream = mContext.getAssets().open("error10.txt");
     /* Just read the file. */
         String json = FileUtility.parseStream(stream);
 
@@ -45,8 +46,8 @@ public class OfflineMockInterceptor implements Interceptor {
                 .body(ResponseBody.create(MEDIA_JSON, json))
                 .request(chain.request())
                 .protocol(Protocol.HTTP_2)
-                .code(200)
-                .message("OK")
+                .code(403)
+                .message("Forbidden")
                 .build();
 
         return response;

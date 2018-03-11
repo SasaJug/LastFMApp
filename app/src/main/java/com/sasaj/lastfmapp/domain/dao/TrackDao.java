@@ -38,4 +38,7 @@ public interface TrackDao {
         @Delete
         void delete(Track track);
 
+        @Query("DELETE FROM tracks")
+        public void deleteAll();
+
 }

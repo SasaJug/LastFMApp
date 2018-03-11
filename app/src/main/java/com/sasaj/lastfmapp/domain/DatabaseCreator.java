@@ -38,6 +38,7 @@ public class DatabaseCreator implements LocalStorage {
 
     @Override
     public void insertAllArtists(List<Artist> artists) {
+        lastFmDatabase.artistDao().deleteAll();
         lastFmDatabase.artistDao().insertAll(artists);
     }
 
@@ -54,6 +55,7 @@ public class DatabaseCreator implements LocalStorage {
 
     @Override
     public void insertAllTracks(List<Track> tracks) {
+        lastFmDatabase.trackDao().deleteAll();
         lastFmDatabase.trackDao().insertAll(tracks);
     }
 }

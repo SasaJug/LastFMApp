@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentInterac
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         vpPager = findViewById(R.id.vpPager);
-        adapterViewPager = new MainPagerAdapter(getSupportFragmentManager());
+        adapterViewPager = new MainPagerAdapter(this, getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
 
         tabLayout = findViewById(R.id.tabs);
