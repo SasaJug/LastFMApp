@@ -15,9 +15,7 @@ import io.reactivex.Flowable;
 public interface LocalStorage {
 
     Flowable<List<Artist>> getArtists();
-    Flowable<Artist> getArtist(String mbid);
-    Flowable<List<Image>> getImages(String mbid);
-
+    Flowable<Artist> getArtist(long id);
     void insertAllArtists(List<Artist> artists);
 
     Flowable<List<Track>> getTracks();

@@ -13,7 +13,7 @@ import java.util.List;
 import io.reactivex.Flowable;
 
 /**
- * Created by DS on 1/21/2018.
+ * Created by sjugurdzija on 1/21/2018.
  */
 
 @Dao // Required annotation for Dao to be recognized by Room
@@ -23,8 +23,8 @@ public interface ArtistDao {
     Flowable<List<Artist>> getAll();
 
     // Returns single artist
-    @Query("SELECT * FROM artists WHERE mbid = :mbid LIMIT 1")
-    Flowable<Artist> get(String mbid);
+    @Query("SELECT * FROM artists WHERE id = :id LIMIT 1")
+    Flowable<Artist> get(long id);
 
     // Inserts multiple artists
     @Insert(onConflict = OnConflictStrategy.REPLACE)

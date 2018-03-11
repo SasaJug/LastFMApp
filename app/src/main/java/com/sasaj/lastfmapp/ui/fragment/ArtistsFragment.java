@@ -91,7 +91,7 @@ public class ArtistsFragment extends Fragment {
         }
         disposable = reactiveRecyclerAdapter.getViewClickedObservable()
                 .subscribe(artist -> {
-                    Intent intent = SingleItemActivity.intentFactory(getContext(), SingleItemActivity.ARTIST, artist.getMbid());
+                    Intent intent = SingleItemActivity.intentFactory(getContext(), SingleItemActivity.ARTIST, artist.getId());
                     startActivity(intent);
                 });
         return root;
@@ -106,3 +106,4 @@ public class ArtistsFragment extends Fragment {
 
 
 }
+

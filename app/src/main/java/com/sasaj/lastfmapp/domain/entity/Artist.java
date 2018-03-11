@@ -18,6 +18,9 @@ import static com.sasaj.lastfmapp.domain.constants.TableNames.ARTIST_TABLE_NAME;
 @Entity(tableName = ARTIST_TABLE_NAME)
 public class Artist extends BaseModel {
 
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+
     @SerializedName("name")
     @Expose
     private String name;
@@ -30,8 +33,6 @@ public class Artist extends BaseModel {
     @Expose
     private String listeners;
 
-    @PrimaryKey
-    @NonNull
     @SerializedName("mbid")
     @Expose
     private String mbid;
@@ -74,14 +75,24 @@ public class Artist extends BaseModel {
         this.image = image;
     }
 
-    public Artist(String name, String playcount, String listeners, String mbid, String url, String streamable) {
+    public Artist(long id, String name, String playcount, String listeners, String mbid, String url, String streamable, List<Image> image) {
         super();
+        this.id = id;
         this.name = name;
         this.playcount = playcount;
         this.listeners = listeners;
         this.mbid = mbid;
         this.url = url;
         this.streamable = streamable;
+        this.image = image;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

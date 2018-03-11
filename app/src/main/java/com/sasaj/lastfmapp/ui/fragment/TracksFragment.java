@@ -98,13 +98,13 @@ public class TracksFragment extends Fragment {
         list.setLayoutManager(new LinearLayoutManager(getContext()));
         TrackReactiveRecyclerAdapter.ReactiveViewHolderFactory<Track> viewAndHolderFactory = (parent, pViewType) -> {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_tracks, parent, false);
-            return new TrackReactiveRecyclerAdapter.ReactiveViewHolderFactory.ViewAndHolder<Track>(
+            return new TrackReactiveRecyclerAdapter.ReactiveViewHolderFactory.ViewAndHolder<>(
                     view,
                     new ReactiveTrackItemHolder<>(view, getActivity())
             );
         };
         LastFmComponent component = ((LastFmApplication)getActivity().getApplication()).getLastFmComponent();
-        TrackReactiveRecyclerAdapter<Track> reactiveRecyclerAdapter = new TrackReactiveRecyclerAdapter<Track>(component.getRepository().getTracks().toObservable(), viewAndHolderFactory);
+        TrackReactiveRecyclerAdapter<Track> reactiveRecyclerAdapter = new TrackReactiveRecyclerAdapter<>(component.getRepository().getTracks().toObservable(), viewAndHolderFactory);
         list.setAdapter(reactiveRecyclerAdapter);
         if (savedInstanceState == null) {
             component.getRepository().refreshTracks();

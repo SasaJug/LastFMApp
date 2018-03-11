@@ -5,9 +5,12 @@ import android.content.Context;
 import com.sasaj.lastfmapp.domain.entity.Chart;
 import com.sasaj.lastfmapp.domain.entity.TopTracks;
 
+import java.util.Scanner;
+
 import javax.inject.Singleton;
 
 import io.reactivex.Single;
+import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -52,7 +55,7 @@ public class RetrofitClient implements HttpClient {
 
     @Override
     public Single<Chart> getChartArtists(int page, int limit) {
-        return getService().listChartArtists(API_KEY, page, limit);
+        return getService().listChartArtists(API_KEY, page, limit).subscribeOn(Schedulers.io());
     }
 
     @Override

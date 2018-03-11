@@ -16,20 +16,11 @@ import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
 public class SingleItemActivity extends AppCompatActivity implements OnSingleFragmentInteractionListener{
 
     public static final String TYPE = "type";
-    public static final String MBID = "mbid";
     public static final String ID = "id";
     public static final int ARTIST = 1;
     public static final int TRACK = 2;
     public static final String ARTIST_FRAGMENT_TAG = "artist_fragment";
     public static final String TRACK_FRAGMENT_TAG = "track_fragment";
-
-    public static Intent intentFactory(Context context, int type, String mbid) {
-        Intent intent = new Intent(context, SingleItemActivity.class);
-        intent.putExtra(TYPE, type);
-        intent.putExtra(MBID, mbid);
-        return intent;
-    }
-
 
     public static Intent intentFactory(Context context, int type, long id) {
         Intent intent = new Intent(context, SingleItemActivity.class);
@@ -54,12 +45,12 @@ public class SingleItemActivity extends AppCompatActivity implements OnSingleFra
 
 
         FragmentManager fm = getSupportFragmentManager();
-
-            switch (intent.getIntExtra(TYPE, -1)) {
+        long id;
+        switch (intent.getIntExtra(TYPE, -1)) {
                 case ARTIST:
-                    String mbid = intent.getStringExtra(MBID);
-                    if (mbid != null) {
-                        SingleArtistFragment artist_fragment = SingleArtistFragment.newInstance(mbid);
+                    id = intent.getLongExtra(ID, -1);
+                    if (id != -1) {
+                        SingleArtistFragment artist_fragment = SingleArtistFragment.newInstance(id);
                         FragmentTransaction ft1 = fm.beginTransaction();
                         ft1.replace(R.id.container, artist_fragment, ARTIST_FRAGMENT_TAG);
                         ft1.commitAllowingStateLoss();
@@ -68,7 +59,7 @@ public class SingleItemActivity extends AppCompatActivity implements OnSingleFra
                     }
                     break;
                 case TRACK:
-                    long id = intent.getLongExtra(ID, -1);
+                    id = intent.getLongExtra(ID, -1);
                     if(id != -1){
                         SingleTrackFragment trackFragment = SingleTrackFragment.newInstance(id);
                         FragmentTransaction ft2 = fm.beginTransaction();

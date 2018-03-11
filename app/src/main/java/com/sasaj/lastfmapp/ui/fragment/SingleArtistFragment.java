@@ -29,9 +29,9 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class SingleArtistFragment extends Fragment {
-    private static final String MBID = "mbid";
+    private static final String ID = "id";
 
-    private String mbid;
+    private long id;
 
     private OnSingleFragmentInteractionListener mListener;
 
@@ -43,13 +43,13 @@ public class SingleArtistFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param mbid mbid.
+     * @param id id.
      * @return A new instance of fragment SingleArtistFragment.
      */
-    public static SingleArtistFragment newInstance(String mbid) {
+    public static SingleArtistFragment newInstance(long id) {
         SingleArtistFragment fragment = new SingleArtistFragment();
         Bundle args = new Bundle();
-        args.putString(MBID, mbid);
+        args.putLong(ID, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,7 +70,7 @@ public class SingleArtistFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mbid = getArguments().getString(MBID);
+            id = getArguments().getLong(ID);
         }
     }
 
@@ -84,11 +84,10 @@ public class SingleArtistFragment extends Fragment {
         LastFmComponent component = ((LastFmApplication)getActivity().getApplication()).getLastFmComponent();
         Repository repository = component.getRepository();
 
-        Artist artist = repository.getArtist(mbid).blockingFirst();
-        List<Image> artistImages = repository.getImages(mbid).blockingFirst();
+        Artist artist = repository.getArtist(id).blockingFirst();
 
         name.setText(artist.getName());
-        Picasso.with(getActivity()).load(artistImages.get(artistImages.size() - 1).getText()).into(image);
+        Picasso.with(getActivity()).load(artist.getImage().get(artist.getImage().size() - 1).getText()).into(image);
         return root;
     }
 

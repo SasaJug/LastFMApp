@@ -4,13 +4,18 @@ import android.util.Log;
 
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Image;
+import com.sasaj.lastfmapp.domain.entity.TopTracks;
 import com.sasaj.lastfmapp.domain.entity.Track;
 import com.sasaj.lastfmapp.httpclient.HttpClient;
 import com.sasaj.lastfmapp.httpclient.RetrofitClient;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
+
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.security.auth.login.LoginException;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;
@@ -21,49 +26,47 @@ import io.reactivex.schedulers.Schedulers;
 
 public class LastFmRepository implements Repository {
 
-    private static final String LOG_TAG = LastFmRepository.class.getSimpleName();
+    private static final String TAG = LastFmRepository.class.getSimpleName();
 
     private HttpClient httpClient;
     private LocalStorage localStorage;
 
     @Inject
-    public LastFmRepository( HttpClient httpClient, LocalStorage storage) {
+    public LastFmRepository(HttpClient httpClient, LocalStorage storage) {
         this.httpClient = httpClient;
         this.localStorage = storage;
-    }
-
-    public Flowable<List<Artist>> getArtists() {
-        return localStorage.getArtists();
     }
 
     @Override
     public void refreshArtists() {
         httpClient.getChartArtists(1, RetrofitClient.LIMIT)
-                .toFlowable()
                 .subscribeOn(Schedulers.io())
-                .doOnNext(chart -> {
+                .subscribe(chart -> {
                     localStorage.insertAllArtists(chart.getArtists().getArtist());
-                })
-                .subscribe(chart -> Log.e(LOG_TAG, "size " + chart.getArtists().getArtist().size()));
+                }, throwable -> {
+                    Log.e(TAG, "refreshArtists: " + throwable.getMessage());
+                });
     }
 
     @Override
     public void refreshTracks() {
         httpClient.getChartTracks(1, RetrofitClient.LIMIT)
-                .toFlowable()
                 .subscribeOn(Schedulers.io())
-                .doOnNext(chart -> {
+                .subscribe(chart -> {
                     localStorage.insertAllTracks(chart.getTracks().getTrack());
-                })
-                .subscribe(chart -> Log.e(LOG_TAG, "size " + chart.getTracks().getTrack()));
+                }, throwable -> {
+                    Log.e(TAG, "refreshTracks: " + throwable.getMessage());
+                });
     }
 
-    public Flowable<Artist> getArtist(String mbid){
-         return localStorage.getArtist(mbid);
+    @Override
+    public Flowable<List<Artist>> getArtists() {
+        return localStorage.getArtists();
     }
 
-    public Flowable<List<Image>> getImages(String mbid){
-        return localStorage.getImages(mbid);
+    @Override
+    public Flowable<Artist> getArtist(long id) {
+        return localStorage.getArtist(id);
     }
 
     @Override

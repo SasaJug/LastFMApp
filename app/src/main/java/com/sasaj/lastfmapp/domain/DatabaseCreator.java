@@ -16,7 +16,7 @@ import io.reactivex.Flowable;
  */
 
 
-public class DatabaseCreator implements LocalStorage{
+public class DatabaseCreator implements LocalStorage {
 
     private LastFmDatabase lastFmDatabase;
 
@@ -25,30 +25,23 @@ public class DatabaseCreator implements LocalStorage{
                 LastFmDatabase.class, LastFmDatabase.DATABASE_NAME).fallbackToDestructiveMigration().build();
     }
 
+    // Artists
+    @Override
     public Flowable<List<Artist>> getArtists() {
         return lastFmDatabase.artistDao().getAll();
     }
 
     @Override
-    public Flowable<Artist> getArtist(String mbid) {
-        return lastFmDatabase.artistDao().get(mbid);
-    }
-
-    @Override
-    public Flowable<List<Image>> getImages(String mbid) {
-        return lastFmDatabase.imageDao().getImagesForMbid(mbid);
+    public Flowable<Artist> getArtist(long id) {
+        return lastFmDatabase.artistDao().get(id);
     }
 
     @Override
     public void insertAllArtists(List<Artist> artists) {
         lastFmDatabase.artistDao().insertAll(artists);
-        for (Artist artist : artists) {
-            for(Image image : artist.getImage())
-                lastFmDatabase.getOpenHelper().getWritableDatabase()
-                        .execSQL("Insert into images(text, size, artist_mbid) values(?,?,?)",new String[]{image.getText(), image.getSize(), artist.getMbid()});
-        }
     }
 
+    // Tracks
     @Override
     public Flowable<List<Track>> getTracks() {
         return lastFmDatabase.trackDao().getAll();

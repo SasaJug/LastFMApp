@@ -16,12 +16,11 @@ import io.reactivex.Single;
 
 public interface Repository {
 
-    Flowable<List<Artist>> getArtists();
     void refreshArtists();
     void refreshTracks();
 
-    Flowable<Artist> getArtist(String mbid);
-    Flowable<List<Image>> getImages(String mbid);
+    Flowable<List<Artist>> getArtists();
+    Flowable<Artist> getArtist(long id);
 
     Flowable<List<Track>> getTracks();
     Flowable<Track> getTrack(long id);
