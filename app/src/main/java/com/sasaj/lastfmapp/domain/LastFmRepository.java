@@ -3,19 +3,13 @@ package com.sasaj.lastfmapp.domain;
 import android.util.Log;
 
 import com.sasaj.lastfmapp.domain.entity.Artist;
-import com.sasaj.lastfmapp.domain.entity.Image;
-import com.sasaj.lastfmapp.domain.entity.TopTracks;
 import com.sasaj.lastfmapp.domain.entity.Track;
-import com.sasaj.lastfmapp.httpclient.HttpClient;
-import com.sasaj.lastfmapp.httpclient.RetrofitClient;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
+import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
+import com.sasaj.lastfmapp.repository.remote.httpclient.RetrofitClient;
 
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.security.auth.login.LoginException;
 
 import io.reactivex.Flowable;
 import io.reactivex.schedulers.Schedulers;

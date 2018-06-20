@@ -3,12 +3,11 @@ package com.sasaj.lastfmapp.domain.test;
 import android.content.Context;
 
 import com.sasaj.lastfmapp.di.HttpModule;
-import com.sasaj.lastfmapp.httpclient.HttpClient;
-import com.sasaj.lastfmapp.httpclient.RetrofitClient;
+import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
+import com.sasaj.lastfmapp.repository.remote.httpclient.RetrofitClient;
 
 import org.mockito.Mockito;
 
-import dagger.Module;
 import dagger.Provides;
 
 /**

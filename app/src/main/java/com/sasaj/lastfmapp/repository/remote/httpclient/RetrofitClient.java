@@ -1,11 +1,9 @@
-package com.sasaj.lastfmapp.httpclient;
+package com.sasaj.lastfmapp.repository.remote.httpclient;
 
 import android.content.Context;
 
 import com.sasaj.lastfmapp.domain.entity.Chart;
 import com.sasaj.lastfmapp.domain.entity.TopTracks;
-
-import java.util.Scanner;
 
 import javax.inject.Singleton;
 
@@ -38,7 +36,7 @@ public class RetrofitClient implements HttpClient {
         OfflineMockInterceptor mockInterceptor = new OfflineMockInterceptor(context);
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
-                .addInterceptor(mockInterceptor)
+//                .addInterceptor(mockInterceptor)
                 .addInterceptor(loggingInterceptor);
 
         client = okHttpBuilder.build();

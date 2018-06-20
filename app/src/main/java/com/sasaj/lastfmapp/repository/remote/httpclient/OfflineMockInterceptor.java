@@ -1,12 +1,12 @@
-package com.sasaj.lastfmapp.httpclient;
+package com.sasaj.lastfmapp.repository.remote.httpclient;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.sasaj.lastfmapp.utility.FileUtility;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
@@ -40,7 +40,7 @@ public class OfflineMockInterceptor implements Interceptor {
 //        InputStream stream = mContext.getAssets().open(path+".txt");
         InputStream stream = mContext.getAssets().open("error10.txt");
     /* Just read the file. */
-        String json = FileUtility.parseStream(stream);
+        String json = parseStream(stream);
 
         Response response = new Response.Builder()
                 .body(ResponseBody.create(MEDIA_JSON, json))
@@ -51,5 +51,16 @@ public class OfflineMockInterceptor implements Interceptor {
                 .build();
 
         return response;
+    }
+
+    private String parseStream(InputStream stream) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        BufferedReader in = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        String line;
+        while ((line = in.readLine()) != null) {
+            builder.append(line);
+        }
+        in.close();
+        return builder.toString();
     }
 }

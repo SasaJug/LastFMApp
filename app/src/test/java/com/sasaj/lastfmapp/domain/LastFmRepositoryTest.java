@@ -3,19 +3,7 @@ package com.sasaj.lastfmapp.domain;
 import com.sasaj.lastfmapp.domain.entity.Artist;
 import com.sasaj.lastfmapp.domain.entity.Artists;
 import com.sasaj.lastfmapp.domain.entity.Chart;
-import com.sasaj.lastfmapp.httpclient.HttpClient;
-
-import net.bytebuddy.description.field.FieldDescription;
-import net.bytebuddy.description.method.MethodDescription;
-import net.bytebuddy.description.type.TypeDescription;
-import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.dynamic.scaffold.TypeInitializer;
-import net.bytebuddy.implementation.Implementation;
-import net.bytebuddy.implementation.MethodAccessorFactory;
-import net.bytebuddy.implementation.attribute.AnnotationValueFilter;
-import net.bytebuddy.implementation.auxiliary.AuxiliaryType;
-import net.bytebuddy.implementation.bytecode.StackManipulation;
-import net.bytebuddy.jar.asm.ClassVisitor;
+import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
 
 import org.junit.After;
 import org.junit.Before;

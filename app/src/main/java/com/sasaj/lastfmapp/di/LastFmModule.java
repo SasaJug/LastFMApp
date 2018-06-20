@@ -3,7 +3,7 @@ package com.sasaj.lastfmapp.di;
 import com.sasaj.lastfmapp.domain.Repository;
 import com.sasaj.lastfmapp.domain.LastFmRepository;
 import com.sasaj.lastfmapp.domain.LocalStorage;
-import com.sasaj.lastfmapp.httpclient.HttpClient;
+import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
 
 import javax.inject.Singleton;
 

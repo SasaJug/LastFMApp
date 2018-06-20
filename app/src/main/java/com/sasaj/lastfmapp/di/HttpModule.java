@@ -2,8 +2,8 @@ package com.sasaj.lastfmapp.di;
 
 import android.content.Context;
 
-import com.sasaj.lastfmapp.httpclient.HttpClient;
-import com.sasaj.lastfmapp.httpclient.RetrofitClient;
+import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
+import com.sasaj.lastfmapp.repository.remote.httpclient.RetrofitClient;
 
 import dagger.Module;
 import dagger.Provides;

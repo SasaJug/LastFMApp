@@ -1,4 +1,4 @@
-package com.sasaj.lastfmapp.httpclient;
+package com.sasaj.lastfmapp.repository.remote.httpclient;
 
 import com.sasaj.lastfmapp.domain.entity.Chart;
 import com.sasaj.lastfmapp.domain.entity.TopTracks;
