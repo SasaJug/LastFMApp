@@ -12,12 +12,10 @@ import android.widget.TextView;
 import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.di.LastFmComponent;
-import com.sasaj.lastfmapp.domain.Repository;
-import com.sasaj.lastfmapp.domain.entity.Track;
+import com.sasaj.lastfmapp.repository.Repository;
+import com.sasaj.lastfmapp.domain.Track;
 import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,13 +37,6 @@ public class SingleTrackFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param long id.
-     * @return A new instance of fragment SingleArtistFragment.
-     */
     public static SingleTrackFragment newInstance(long id) {
         SingleTrackFragment fragment = new SingleTrackFragment();
         Bundle args = new Bundle();

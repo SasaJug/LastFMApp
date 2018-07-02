@@ -2,8 +2,8 @@ package com.sasaj.lastfmapp.repository.remote.httpclient;
 
 import android.content.Context;
 
-import com.sasaj.lastfmapp.domain.entity.Chart;
-import com.sasaj.lastfmapp.domain.entity.TopTracks;
+import com.sasaj.lastfmapp.domain.Chart;
+import com.sasaj.lastfmapp.domain.TopTracks;
 
 import javax.inject.Singleton;
 

@@ -1,8 +1,8 @@
 package com.sasaj.lastfmapp.di;
 
-import com.sasaj.lastfmapp.domain.Repository;
-import com.sasaj.lastfmapp.domain.LastFmRepository;
-import com.sasaj.lastfmapp.domain.LocalStorage;
+import com.sasaj.lastfmapp.repository.Repository;
+import com.sasaj.lastfmapp.repository.LastFmRepository;
+import com.sasaj.lastfmapp.repository.local.database.LocalStorage;
 import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
 
 import javax.inject.Singleton;

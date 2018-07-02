@@ -1,9 +1,9 @@
 package com.sasaj.lastfmapp.domain.test;
 
-import com.sasaj.lastfmapp.domain.Repository;
+import com.sasaj.lastfmapp.repository.Repository;
 import com.sasaj.lastfmapp.di.LastFmModule;
-import com.sasaj.lastfmapp.domain.LastFmRepository;
-import com.sasaj.lastfmapp.domain.LocalStorage;
+import com.sasaj.lastfmapp.repository.LastFmRepository;
+import com.sasaj.lastfmapp.repository.local.database.LocalStorage;
 import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
 
 import org.mockito.Mockito;

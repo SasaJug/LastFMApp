@@ -11,14 +11,11 @@ import android.widget.TextView;
 
 import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.Repository;
+import com.sasaj.lastfmapp.repository.Repository;
 import com.sasaj.lastfmapp.di.LastFmComponent;
-import com.sasaj.lastfmapp.domain.entity.Artist;
-import com.sasaj.lastfmapp.domain.entity.Image;
+import com.sasaj.lastfmapp.domain.Artist;
 import com.sasaj.lastfmapp.ui.interfaces.OnSingleFragmentInteractionListener;
 import com.squareup.picasso.Picasso;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.

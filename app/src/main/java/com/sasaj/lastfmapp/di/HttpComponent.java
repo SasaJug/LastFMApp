@@ -1,6 +1,6 @@
 package com.sasaj.lastfmapp.di;
 
-import com.sasaj.lastfmapp.domain.Repository;
+import com.sasaj.lastfmapp.repository.Repository;
 import javax.inject.Singleton;
 import dagger.Component;
 

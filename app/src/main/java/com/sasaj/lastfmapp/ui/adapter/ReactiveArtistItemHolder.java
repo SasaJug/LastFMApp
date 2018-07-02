@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sasaj.lastfmapp.R;
-import com.sasaj.lastfmapp.domain.entity.Artist;
+import com.sasaj.lastfmapp.domain.Artist;
 import com.squareup.picasso.Picasso;
 
 /**

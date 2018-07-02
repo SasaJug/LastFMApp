@@ -1,8 +1,7 @@
 package com.sasaj.lastfmapp.domain;
 
-import com.sasaj.lastfmapp.domain.entity.Artist;
-import com.sasaj.lastfmapp.domain.entity.Artists;
-import com.sasaj.lastfmapp.domain.entity.Chart;
+import com.sasaj.lastfmapp.repository.LastFmRepository;
+import com.sasaj.lastfmapp.repository.local.database.LocalStorage;
 import com.sasaj.lastfmapp.repository.remote.httpclient.HttpClient;
 
 import org.junit.After;
@@ -42,7 +41,7 @@ public class LastFmRepositoryTest {
     private List<Artist> artistsList;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp(){
         lastFmRepository = new LastFmRepository(httpClient, localStorage);
         Artists artists = new Artists();
         Artist artist = new Artist("Sasa", "", "", "", "", "", null);
@@ -53,27 +52,27 @@ public class LastFmRepositoryTest {
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         lastFmRepository = null;
     }
 
     @Test
-    public void getArtists() throws Exception {
+    public void getArtists(){
         when(localStorage.getArtists()).thenReturn(Flowable.just(artistsList));
         Flowable<List<Artist>> result = lastFmRepository.getArtists();
         assertTrue (result.blockingFirst().get(0).getName().equals("Sasa"));
     }
 
     @Test
-    public void refreshArtists() throws Exception {
+    public void refreshArtists(){
     }
 
     @Test
-    public void getArtist() throws Exception {
+    public void getArtist(){
     }
 
     @Test
-    public void getImages() throws Exception {
+    public void getImages(){
     }
 
 }

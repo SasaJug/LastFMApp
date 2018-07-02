@@ -2,8 +2,8 @@ package com.sasaj.lastfmapp.di;
 
 import android.content.Context;
 
-import com.sasaj.lastfmapp.domain.DatabaseCreator;
-import com.sasaj.lastfmapp.domain.LocalStorage;
+import com.sasaj.lastfmapp.repository.local.database.DatabaseCreator;
+import com.sasaj.lastfmapp.repository.local.database.LocalStorage;
 
 import javax.inject.Singleton;
 

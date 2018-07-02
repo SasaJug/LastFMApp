@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.sasaj.lastfmapp.LastFmApplication;
 import com.sasaj.lastfmapp.R;
 import com.sasaj.lastfmapp.di.LastFmComponent;
-import com.sasaj.lastfmapp.domain.entity.Artist;
+import com.sasaj.lastfmapp.domain.Artist;
 import com.sasaj.lastfmapp.ui.SingleItemActivity;
 import com.sasaj.lastfmapp.ui.adapter.ReactiveArtistItemHolder;
 import com.sasaj.lastfmapp.ui.adapter.ArtistReactiveRecyclerAdapter;
@@ -46,8 +46,7 @@ public class ArtistsFragment extends Fragment {
      * this fragment.
      */
     public static ArtistsFragment newInstance() {
-        ArtistsFragment fragment = new ArtistsFragment();
-        return fragment;
+        return new ArtistsFragment();
     }
 
 
